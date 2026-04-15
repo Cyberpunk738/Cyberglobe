@@ -1,0 +1,367 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+  --color-cyber-cyan: #00f0ff;
+  --color-cyber-magenta: #ff00aa;
+  --color-cyber-dark: #030308;
+  --color-cyber-panel: #0a0e18;
+}
+
+/* ─── Base ─────────────────────────────────────────────── */
+body {
+  background: #030308;
+  color: #e0e0e0;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* ─── Scrollbar ────────────────────────────────────────── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.15);
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.3);
+}
+
+/* ─── Glass panel ──────────────────────────────────────── */
+.glass-panel {
+  background: rgba(10, 14, 24, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Glow effects ─────────────────────────────────────── */
+.glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5),
+    0 0 20px rgba(0, 240, 255, 0.3),
+    0 0 40px rgba(0, 240, 255, 0.1);
+}
+
+.glow-magenta {
+  text-shadow: 0 0 10px rgba(255, 0, 170, 0.5),
+    0 0 20px rgba(255, 0, 170, 0.3);
+}
+
+.border-glow {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.08),
+    inset 0 0 15px rgba(0, 240, 255, 0.02);
+}
+
+/* ─── Animated background grid ─────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Pulse animation ──────────────────────────────────── */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* ─── Select dropdown styling ──────────────────────────── */
+select option {
+  background: #0a0e18;
+  color: #e0e0e0;
+}
+
+/* ─── Scanline effect (animated) ───────────────────────── */
+@keyframes scanline-scroll {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100px;
+  }
+}
+
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 240, 255, 0.008) 2px,
+    rgba(0, 240, 255, 0.008) 4px
+  );
+  animation: scanline-scroll 8s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ─── ADVANCED VISUAL EFFECTS ─────────────────────────────
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Holographic title text ───────────────────────────── */
+@keyframes holo-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+    text-shadow:
+      0 0 10px rgba(0, 240, 255, 0.6),
+      0 0 20px rgba(0, 240, 255, 0.3),
+      0 0 40px rgba(0, 240, 255, 0.15);
+  }
+  50% {
+    background-position: 100% 50%;
+    text-shadow:
+      0 0 10px rgba(255, 0, 170, 0.5),
+      0 0 20px rgba(0, 240, 255, 0.3),
+      0 0 40px rgba(255, 0, 170, 0.1);
+  }
+}
+
+.holo-text {
+  background: linear-gradient(
+    90deg,
+    #00f0ff 0%,
+    #ff00aa 25%,
+    #00f0ff 50%,
+    #ff00aa 75%,
+    #00f0ff 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: holo-shift 6s ease-in-out infinite;
+}
+
+/* ─── Animated gradient border ─────────────────────────── */
+@keyframes gradient-border-rotate {
+  0% {
+    --angle: 0deg;
+  }
+  100% {
+    --angle: 360deg;
+  }
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.animated-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.animated-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 40%,
+    rgba(0, 240, 255, 0.4) 50%,
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  animation: gradient-border-rotate 4s linear infinite;
+  pointer-events: none;
+}
+
+/* ─── Data stream shimmer (header) ─────────────────────── */
+@keyframes data-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.data-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 240, 255, 0.03) 40%,
+    rgba(0, 240, 255, 0.06) 50%,
+    rgba(0, 240, 255, 0.03) 60%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: data-shimmer 6s linear infinite;
+}
+
+/* ─── Ambient background pulse ─────────────────────────── */
+@keyframes ambient-pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.ambient-pulse {
+  animation: ambient-pulse 4s ease-in-out infinite;
+}
+
+/* ─── Slide-in animation for feed items ────────────────── */
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.feed-item-enter {
+  animation: slide-in-right 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ─── Severity glow on hover ───────────────────────────── */
+.severity-glow-low:hover {
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+}
+.severity-glow-medium:hover {
+  box-shadow: 0 0 12px rgba(255, 170, 0, 0.2);
+}
+.severity-glow-high:hover {
+  box-shadow: 0 0 12px rgba(255, 68, 68, 0.2);
+}
+.severity-glow-critical:hover {
+  box-shadow: 0 0 12px rgba(255, 0, 170, 0.25);
+}
+
+/* ─── Stat card glow border ────────────────────────────── */
+@keyframes stat-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 rgba(0, 240, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.08);
+  }
+}
+
+.stat-card-glow {
+  animation: stat-glow 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.stat-card-glow:hover {
+  border-color: rgba(0, 240, 255, 0.2) !important;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ─── Animated gradient bar fill ───────────────────────── */
+@keyframes gradient-bar-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.animated-bar {
+  background-size: 200% 100% !important;
+  animation: gradient-bar-flow 3s linear infinite;
+}
+
+/* ─── Legend dot pulse ─────────────────────────────────── */
+@keyframes legend-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  50% {
+    transform: scale(1.3);
+    box-shadow: 0 0 6px 0 currentColor;
+  }
+}
+
+.legend-dot {
+  animation: legend-pulse 2s ease-in-out infinite;
+}
+
+/* ─── Data stream vertical lines ───────────────────────── */
+@keyframes data-flow-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+.data-stream-line {
+  position: absolute;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 240, 255, 0.15) 50%,
+    transparent 100%
+  );
+  animation: data-flow-down linear infinite;
+  pointer-events: none;
+}
+
+/* ─── Version badge pulse ──────────────────────────────── */
+@keyframes version-pulse {
+  0%, 100% {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    border-color: rgba(0, 240, 255, 0.3);
+  }
+}
+
+.version-badge {
+  animation: version-pulse 4s ease-in-out infinite;
+}
